@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — ATELIER KICKS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    if (localStorage.getItem("atelier_theme") === "light") {
+      document.documentElement.setAttribute("data-theme", "light");
+    }
+  </script>
+  <link rel="stylesheet" href="./css/admin.css" />
+</head>
+<body>
+
+  <!-- PANTALLA DE LOGIN -->
+  <main id="login-section" class="login-shell">
+    <div class="login-box">
+      <p class="eyebrow">ATELIER KICKS</p>
+      <h1>Panel de Control</h1>
+      <p class="login-sub">Ingresa tus credenciales de administrador.</p>
+
+      <form id="login-form">
+        <div class="field">
+          <label for="login-user">Usuario</label>
+          <input type="text" id="login-user" placeholder="admin" required autocomplete="username" />
+        </div>
+
+        <div class="field">
+          <label for="login-pass">Contraseña</label>
+          <input type="password" id="login-pass" placeholder="••••••••" required autocomplete="current-password" />
+        </div>
+
+        <p id="login-error" class="error-msg hidden">Credenciales incorrectas. Intenta de nuevo.</p>
+
+        <button type="submit" class="btn btn-dark full-width">Ingresar al panel</button>
+      </form>
+
+      <a href="./index.html" class="back-link">← Volver a la tienda</a>
+    </div>
+  </main>
+
+  <!-- DASHBOARD ADMIN -->
+  <div id="admin-section" class="hidden">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="topbar-brand">
+          <span class="brand">ATELIER<span>KICKS</span></span>
+          <span class="divider">/</span>
+          <span class="panel-tag">Inventario CRUD</span>
+        </div>
+
+        <div class="topbar-actions">
+          <button id="btn-theme-toggle" class="theme-toggle" aria-label="Cambiar a modo claro" title="Cambiar tema">
+            <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="4"></circle>
+              <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>
+            </svg>
+            <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          </button>
+          <a href="./index.html" class="btn btn-ghost">Ver tienda</a>
+          <button id="btn-logout" class="btn btn-dark">Cerrar sesión</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <!-- MÉTRICAS -->
+      <section class="kpi-grid">
+        <div class="kpi-card">
+          <span class="kpi-label">Modelos registrados</span>
+          <strong id="kpi-modelos" class="kpi-value">0</strong>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-label">Unidades en stock</span>
+          <strong id="kpi-stock" class="kpi-value">0</strong>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-label">Valor inventario</span>
+          <strong id="kpi-valor" class="kpi-value">$0</strong>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-label">Stock crítico (2 o menos)</span>
+          <strong id="kpi-bajo" class="kpi-value warn-text">0</strong>
+        </div>
+      </section>
+
+      <!-- FORMULARIO CREAR / EDITAR -->
+      <section class="panel-card">
+        <div class="card-head">
+          <div>
+            <p class="eyebrow">GESTIÓN DE PRODUCTO</p>
+            <h2 id="form-title">Nuevo Sneaker</h2>
+          </div>
+          <button type="button" id="btn-cancel-edit" class="btn btn-ghost hidden">Cancelar edición</button>
+        </div>
+
+        <form id="producto-form" class="editor-layout">
+          <input type="hidden" id="producto-id" />
+
+          <div class="form-fields">
+            <div class="field">
+              <label for="nombre">Nombre del modelo</label>
+              <input type="text" id="nombre" placeholder="Ej: Converse Chuck 70 Hi" required />
+            </div>
+
+            <div class="field">
+              <label for="marca">Marca</label>
+              <select id="marca" required>
+                <option value="Louis Vuitton">Louis Vuitton</option>
+                <option value="Jordan">Jordan</option>
+                <option value="New Balance">New Balance</option>
+                <option value="Converse">Converse</option>
+                <option value="Nike">Nike</option>
+                <option value="Adidas">Adidas</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="precio">Precio (USD)</label>
+              <input type="number" id="precio" min="1" step="0.01" placeholder="165" required />
+            </div>
+
+            <div class="field">
+              <label for="stock">Stock</label>
+              <input type="number" id="stock" min="0" placeholder="5" required />
+            </div>
+
+            <div class="field">
+              <label for="talla">Talla</label>
+              <input type="text" id="talla" placeholder="42 EU" required />
+            </div>
+
+            <div class="field">
+              <label for="color">Color</label>
+              <input type="text" id="color" placeholder="Negro / Egret" required />
+            </div>
+
+            <div class="field">
+              <label for="categoriaId">Categoría</label>
+              <select id="categoriaId" required>
+                <option value="1">1 — Lujo / Designer</option>
+                <option value="2">2 — Jordan / Basket</option>
+                <option value="3">3 — Urbanas / Lifestyle</option>
+                <option value="4">4 — Converse / Clásicas</option>
+                <option value="5">5 — Adidas / Originals</option>
+                <option value="6">6 — Nike / Sportswear</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="imagen">URL de imagen</label>
+              <input type="url" id="imagen" placeholder="https://..." required />
+            </div>
+
+            <div class="field full-span">
+              <label for="descripcion">Descripción</label>
+              <textarea id="descripcion" rows="2" placeholder="Materiales, edición y detalles clave..." required></textarea>
+            </div>
+
+            <div class="field-check full-span">
+              <label>
+                <input type="checkbox" id="edicionLimitada" />
+                Destacar como Edición Limitada (aparece en la galería editorial)
+              </label>
+            </div>
+
+            <div class="full-span">
+              <button type="submit" id="btn-submit" class="btn btn-dark">Guardar en catálogo</button>
+            </div>
+          </div>
+
+          <div class="preview-pane">
+            <span class="preview-label">Vista previa</span>
+            <div class="preview-frame">
+              <img id="img-preview" src="https://placehold.co/800x600/18181b/71717a?text=Sin+imagen" alt="Vista previa del producto" />
+            </div>
+            <p class="preview-hint">Pega una URL válida (JPG, PNG o WebP) para verificar cómo se verá en la tienda.</p>
+          </div>
+        </form>
+      </section>
+
+      <!-- TABLA INVENTARIO -->
+      <section class="panel-card">
+        <div class="card-head">
+          <div>
+            <p class="eyebrow">BASE DE DATOS MOCKAPI</p>
+            <h2>Inventario Actual</h2>
+          </div>
+          <input
+            type="text"
+            id="admin-search"
+            class="search-input"
+            placeholder="Filtrar inventario..."
+            aria-label="Filtrar inventario"
+          />
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Producto</th>
+                <th>Marca</th>
+                <th>Talla</th>
+                <th>Precio</th>
+                <th>Stock</th>
+                <th class="align-right">Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="tabla-productos">
+              <tr>
+                <td colspan="6" class="empty-cell">Cargando catálogo desde MockAPI...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="admin-toast" class="toast"></div>
+
+  <script src="./js/theme.js"></script>
+  <script src="./js/admin.js"></script>
+</body>
+</html>

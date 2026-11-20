@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ATELIER KICKS — Curated Sneakers</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    if (localStorage.getItem("atelier_theme") === "light") {
+      document.documentElement.setAttribute("data-theme", "light");
+    }
+  </script>
+  <link rel="stylesheet" href="./css/styles.css" />
+</head>
+<body>
+
+  <!-- BARRA SUPERIOR -->
+  <div class="announcement-bar">
+    <span>ENVÍO ASEGURADO GLOBAL</span>
+    <span class="dot">•</span>
+    <span>AUTENTICIDAD VERIFICADA</span>
+    <span class="dot">•</span>
+    <span>INVENTARIO EN TIEMPO REAL</span>
+  </div>
+
+  <!-- NAVEGACIÓN -->
+  <header class="navbar">
+    <div class="nav-inner">
+      <a href="./index.html" class="brand">ATELIER<span>KICKS</span></a>
+
+      <nav class="nav-links">
+        <a href="#galeria">Editorial</a>
+        <a href="#catalogo">Catálogo</a>
+        <a href="./admin.html">Admin</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button id="btn-theme-toggle" class="theme-toggle" aria-label="Cambiar a modo claro" title="Cambiar tema">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>
+          </svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+
+        <button id="btn-open-cart" class="cart-trigger" aria-label="Abrir bolsa de compra">
+          <span>Bolsa</span>
+          <span id="cart-count" class="cart-count">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO EDITORIAL -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">COLECCIÓN CURADA 2026</p>
+        <h1>Siluetas icónicas.<br />Stock limitado.</h1>
+        <p class="hero-desc">
+          Selección verificada de Louis Vuitton, Jordan, New Balance y Converse. Cada par descuenta inventario automáticamente al confirmar tu orden.
+        </p>
+        <div class="hero-actions">
+          <a href="#catalogo" class="btn btn-dark">Explorar catálogo</a>
+          <a href="#galeria" class="btn btn-ghost">Ver destacados</a>
+        </div>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat-item">
+          <span class="stat-value" id="hero-total-models">—</span>
+          <span class="stat-label">Modelos activos</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value" id="hero-total-pairs">—</span>
+          <span class="stat-label">Pares en bodega</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">100%</span>
+          <span class="stat-label">Verificados</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALERÍA BENTO DESTACADA -->
+  <section id="galeria" class="section gallery-section">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">LOOKBOOK</p>
+          <h2>Ediciones Destacadas</h2>
+        </div>
+        <p class="section-note">Haz clic en cualquier silueta para ver su ficha completa.</p>
+      </div>
+
+      <div id="galeria-grid" class="bento-grid">
+        <div class="skeleton-box">Cargando galería...</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATÁLOGO COMPLETO -->
+  <section id="catalogo" class="section catalog-section">
+    <div class="container">
+      <div class="catalog-top">
+        <div>
+          <p class="eyebrow">INVENTARIO</p>
+          <h2>Catálogo Completo</h2>
+        </div>
+        <span id="contador-resultados" class="result-count">Cargando...</span>
+      </div>
+
+      <!-- FILTROS -->
+      <div class="toolbar">
+        <div class="brand-tabs" id="brand-tabs" role="tablist" aria-label="Filtrar por marca">
+          <button class="tab-btn active" data-brand="todas">Todos</button>
+          <button class="tab-btn" data-brand="Louis Vuitton">Louis Vuitton</button>
+          <button class="tab-btn" data-brand="Jordan">Jordan</button>
+          <button class="tab-btn" data-brand="New Balance">New Balance</button>
+          <button class="tab-btn" data-brand="Converse">Converse</button>
+          <button class="tab-btn" data-brand="Adidas">Adidas</button>
+          <button class="tab-btn" data-brand="Nike">Nike</button>
+        </div>
+
+        <div class="toolbar-controls">
+          <div class="search-wrap">
+            <input
+              type="text"
+              id="filtro-busqueda"
+              placeholder="Buscar modelo o color..."
+              aria-label="Buscar modelo o color"
+            />
+          </div>
+
+          <select id="filtro-categoria" aria-label="Filtrar por categoría">
+            <option value="todas">Categoría: Todas</option>
+            <option value="1">Lujo / Designer</option>
+            <option value="2">Jordan / Basket</option>
+            <option value="3">Urbanas / Lifestyle</option>
+            <option value="4">Converse / Clásicas</option>
+            <option value="5">Adidas / Originals</option>
+            <option value="6">Nike / Sportswear</option>
+          </select>
+
+          <select id="filtro-orden" aria-label="Ordenar productos">
+            <option value="default">Orden: Destacados</option>
+            <option value="price-asc">Precio: Menor a mayor</option>
+            <option value="price-desc">Precio: Mayor a menor</option>
+            <option value="stock-desc">Mayor disponibilidad</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="catalogo-grid" class="products-grid">
+        <div class="skeleton-box">Conectando con MockAPI...</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>
+        <span class="brand">ATELIER<span>KICKS</span></span>
+        <p class="footer-copy">Tienda curada conectada a MockAPI.</p>
+      </div>
+      <div class="footer-links">
+        <a href="#galeria">Editorial</a>
+        <a href="#catalogo">Catálogo</a>
+        <a href="./admin.html">Acceso Admin</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- MODAL VISTA RÁPIDA -->
+  <div id="product-modal-overlay" class="overlay" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <button id="btn-close-modal" class="close-btn modal-close" aria-label="Cerrar detalle">✕</button>
+      <div class="modal-grid">
+        <div class="modal-media">
+          <img id="modal-img" src="" alt="" />
+        </div>
+        <div class="modal-info">
+          <p id="modal-brand" class="eyebrow"></p>
+          <h3 id="modal-title"></h3>
+          <p id="modal-price" class="modal-price"></p>
+          <p id="modal-desc" class="modal-desc"></p>
+
+          <div class="modal-specs">
+            <div>
+              <span class="spec-label">Talla</span>
+              <span id="modal-talla" class="spec-value"></span>
+            </div>
+            <div>
+              <span class="spec-label">Color</span>
+              <span id="modal-color" class="spec-value"></span>
+            </div>
+            <div>
+              <span class="spec-label">Disponibilidad</span>
+              <span id="modal-stock" class="spec-value"></span>
+            </div>
+          </div>
+
+          <button id="modal-add-btn" class="btn btn-dark full-width">Agregar a la bolsa</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DRAWER DEL CARRITO -->
+  <div id="cart-overlay" class="overlay" aria-hidden="true"></div>
+  <aside id="cart-drawer" class="cart-drawer" aria-label="Bolsa de compra">
+    <div class="cart-head">
+      <div>
+        <h3>Tu Bolsa</h3>
+        <p id="cart-subtitle" class="cart-sub">0 artículos</p>
+      </div>
+      <button id="btn-close-cart" class="close-btn" aria-label="Cerrar bolsa">✕</button>
+    </div>
+
+    <div id="cart-items" class="cart-items">
+      <p class="empty-state">Tu bolsa está vacía.</p>
+    </div>
+
+    <div class="cart-foot">
+      <div class="summary-line">
+        <span>Envío asegurado</span>
+        <span>Cortesía</span>
+      </div>
+      <div class="summary-total">
+        <span>Total</span>
+        <strong id="cart-total">$0</strong>
+      </div>
+      <button id="btn-checkout" class="btn btn-dark full-width" disabled>
+        Confirmar compra
+      </button>
+      <button id="btn-clear-cart" class="btn-link">Vaciar bolsa</button>
+    </div>
+  </aside>
+
+  <!-- TOAST -->
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="./js/theme.js"></script>
+  <script src="./js/app.js"></script>
+</body>
+</html>
